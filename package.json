@@ -1,0 +1,21 @@
+{
+  "name": "videocaller",
+  "version": "1.0.0",
+  "description": "Video Calling APP",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js -e ejs,js"
+  },
+  "author": "Nikumani Choudhury",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "peer": "^0.6.1",
+    "socket.io": "^3.1.0",
+    "uuid": "^8.3.2",
+    "xss": "^1.0.8"
+  }
+}
