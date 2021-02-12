@@ -21,13 +21,13 @@
         if (url !== "") {
           url = url.split("/");
           console.log(url.length - 1);
-          window.location.href = `/${url[url.length - 1]}`;
+          window.location.href = `/room/${url[url.length - 1]}`;
         } else {
           url =
             Math.random().toString(36).substring(2, 30) +
             "videocaller" +
             Math.random().toString(36).substring(2, 30);
-          window.location.href = `/${url}`;
+          window.location.href = `/room/${url}`;
         }
       }
     </script>

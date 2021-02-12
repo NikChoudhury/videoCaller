@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+      console.log(ROOM_ID);
+    </script>
+
+    <title>Room</title>
+  </head>
+  <body>
+    <h1>This Is From Room</h1>
+    <div class="video-grid"></div>
+    <button onclick="stopVideo()" id="btn">Stop</button>
+    <button onclick="playVideo()">play</button>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>

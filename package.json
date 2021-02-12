@@ -10,12 +10,16 @@
   "author": "Nikumani Choudhury",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "mongoose": "^5.11.15",
     "peer": "^0.6.1",
     "socket.io": "^3.1.0",
     "uuid": "^8.3.2",
+    "validator": "^13.5.2",
     "xss": "^1.0.8"
   }
 }
