@@ -1,35 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Video Caller</title>
+<%- include('../layouts/header.ejs') %>
+
+  <title>Video Caller</title>
   </head>
-  <body>
-    <div>
-      <input type="text" name="url" id="url" />
-      <button onclick="go()">Go</button>
-    </div>
+  <%- include('../layouts/navbar.ejs') %>
 
-    <script>
-      let InputUrl = document.getElementById("url");
-      let url = "";
+    <body>
+      <div>
+        <input type="text" name="url" id="url" />
+        <button onclick="go()">Go</button>
+      </div>
 
-      function go() {
-        url = InputUrl.value;
-        if (url !== "") {
-          url = url.split("/");
-          console.log(url.length - 1);
-          window.location.href = `/room/${url[url.length - 1]}`;
-        } else {
-          url =
-            Math.random().toString(36).substring(2, 30) +
-            "videocaller" +
-            Math.random().toString(36).substring(2, 30);
-          window.location.href = `/room/${url}`;
+      <script>
+        let InputUrl = document.getElementById("url");
+        let url = "";
+
+        function go() {
+          url = InputUrl.value;
+          if (url !== "") {
+            url = url.split("/");
+            console.log(url.length - 1);
+            window.location.href = `/room/${url[url.length - 1]}`;
+          } else {
+            url =
+              Math.random().toString(36).substring(2, 30) +
+              "videocaller" +
+              Math.random().toString(36).substring(2, 30);
+            window.location.href = `/room/${url}`;
+          }
         }
-      }
-    </script>
-  </body>
-</html>
+      </script>
+    </body>
+
+    </html>

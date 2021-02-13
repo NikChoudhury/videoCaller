@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
 //################ Define or Create Schema ################
-registerSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
-        required: [true, "First Name Is Required!!"],
-        unique: [true, "Username id already Present !!"],
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -20,7 +20,7 @@ registerSchema = new mongoose.Schema({
 
     pass: {
         type: String,
-        required: [true, "Password Is Required!!"],
+        required: true
 
     },
 
@@ -45,7 +45,7 @@ registerSchema = new mongoose.Schema({
 // }
 
 // ################ Define Midleware For Hashing Password ################
-registerSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (next) {
     if (this.isModified('pass')) {
         // console.log(`Without Hashing : ${this.password}`);
         this.pass = await bcrypt.hash(this.pass, 12);
@@ -55,9 +55,9 @@ registerSchema.pre('save', async function (next) {
 });
 
 // ################ Define Model or Collections Creation ################
-const Register = new mongoose.model("Register", registerSchema);
+const User = new mongoose.model("user", UserSchema);
 
-module.exports = Register;
+module.exports = User;
 
 // ####### Bcrypt Pass Technique #######
 /*const securePassword = async(password)=>{
