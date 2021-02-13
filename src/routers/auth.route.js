@@ -31,7 +31,9 @@ router.post(
     body("pass")
       .trim()
       .isLength(2)
-      .withMessage("Password length is to Short!!"),
+      .withMessage("Password length is to Short!!")
+      .isStrongPassword()
+      .withMessage("Password is not Strong"),
     body("cpass").custom((value, { req }) => {
       if (value !== req.body.pass) {
         throw new Error("Password Do not match!!");
@@ -79,7 +81,7 @@ router.post(
       await user.save();
       req.flash(
         "success",
-        `${user.email} registered succesfully, You can now login`
+        ` ${user.email} registered succesfully, You can now login`
       );
       res.redirect("/auth/signin");
     } catch (error) {
