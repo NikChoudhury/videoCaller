@@ -1,11 +1,16 @@
 <nav>
-    <h2>Video Caller</h2>
-    <ul>
-        <li>
-            <a href="/">Home</a>
-            <a href="/auth/signup">Sign Up</a>
-            <a href="/auth/signin">Sigin in</a>
-            <a href="/auth/logout">LogOut</a>
-        </li>
-    </ul>
+  <h2>Video Caller</h2>
+  <ul>
+    <li>
+      <a href="/">Home</a>
+      <% if (user) { %>
+      <a href="/user/profile">Profile</a>
+      <a href="/auth/logout">LogOut</a>
+
+      <% }else{ %>
+      <a href="/auth/signup">Sign Up</a>
+      <a href="/auth/signin">Sigin in</a>
+      <% } %>
+    </li>
+  </ul>
 </nav>

@@ -13,16 +13,16 @@
                  <!-- Flash Messages -->
             <%- include('../layouts/flash_messages.ejs') %>
             <!-- End Flash Messages -->
-              <form>
+              <form action="/auth/signin" method="POST">
                 <div class="form-group">
                   <label>Your email</label>
-                  <input name="" class="form-control" placeholder="Email" type="email" />
+                  <input name="email" class="form-control" placeholder="Email" type="email" />
                 </div>
                 <!-- form-group// -->
                 <div class="form-group">
                   <a class="float-right" href="#">Forgot?</a>
                   <label>Your password</label>
-                  <input class="form-control" placeholder="******" type="password" />
+                  <input name="pass" class="form-control" placeholder="******" type="password" />
                 </div>
                 <!-- form-group// -->
                 <div class="form-group">

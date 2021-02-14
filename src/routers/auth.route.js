@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user.model");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 //  Create a new router
 const router = new express.Router();
 
@@ -90,14 +91,38 @@ router.post(
   }
 );
 
-router.get("/signin", async (req, res, next) => {
+router.get("/signin", ensureNotAuthenticated, async (req, res, next) => {
   res.render("signin");
 });
-router.post("/signin", async (req, res, next) => {
-  res.send("signin post");
-});
+router.post(
+  "/signin",
+  ensureNotAuthenticated,
+  passport.authenticate("local", {
+    successRedirect: "/user/profile",
+    failureRedirect: "/auth/signin",
+    failureFlash: true,
+  })
+);
 
-router.get("/logout", async (req, res, next) => {
-  res.send("signin post");
+router.get("/logout", ensureAuthenticated, async (req, res, next) => {
+  req.logout();
+  res.redirect("/auth/signin");
 });
 module.exports = router;
+
+// Function For Ensure User is Authenticated Or Not
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/auth/signin");
+  }
+}
+
+function ensureNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.redirect("back");
+  } else {
+    next();
+  }
+}

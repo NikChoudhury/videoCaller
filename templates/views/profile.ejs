@@ -1,0 +1,27 @@
+<%- include('../layouts/header.ejs') %>
+
+  <title>Video Caller</title>
+  </head>
+ 
+
+    <body>
+        <%- include('../layouts/navbar.ejs') %>
+        <div class="profile">
+            <div>
+                <p class="title">ID</p>
+                <p class="content"><%= person.id %> </p>
+            </div>
+            <div>
+                <p class="title">Email</p>
+                <p class="content"><%= person.email %> </p>
+            </div>
+
+            <div>
+                <p class="title">User Object</p>
+                <p class="content"><%= person %> </p>
+            </div>
+           
+        </div>
+    </body>
+
+    </html>

@@ -1,35 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 // const validator = require('validator');
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
+const createError = require("http-errors");
 // const jwt = require('jsonwebtoken');
 //################ Define or Create Schema ################
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        trim: true,
-        required: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        trim: true,
-        required: true,
-        unique: true,
-        lowercase: true
-    },
+  username: {
+    type: String,
+    trim: true,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    trim: true,
+    required: true,
+    unique: true,
+    lowercase: true,
+  },
 
-    pass: {
-        type: String,
-        required: true
+  pass: {
+    type: String,
+    required: true,
+  },
 
-    },
-
-    // tokens:[{
-    //     token:{
-    //         type:String,
-    //         required:true
-    //     }
-    // }]
+  // tokens:[{
+  //     token:{
+  //         type:String,
+  //         required:true
+  //     }
+  // }]
 });
 
 // ################ Define Midleware For Jwt OAuth ################
@@ -44,14 +44,23 @@ const UserSchema = new mongoose.Schema({
 //     }
 // }
 
+// Check Vaild password
+UserSchema.methods.isVaildPassword = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.pass);
+  } catch (error) {
+    throw createHttpError.InternalServerError(error.message);
+  }
+};
+
 // ################ Define Midleware For Hashing Password ################
-UserSchema.pre('save', async function (next) {
-    if (this.isModified('pass')) {
-        // console.log(`Without Hashing : ${this.password}`);
-        this.pass = await bcrypt.hash(this.pass, 12);
-        // console.log(`With Hashing : ${this.password}`);
-        next();
-    }
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("pass")) {
+    // console.log(`Without Hashing : ${this.password}`);
+    this.pass = await bcrypt.hash(this.pass, 12);
+    // console.log(`With Hashing : ${this.password}`);
+    next();
+  }
 });
 
 // ################ Define Model or Collections Creation ################
