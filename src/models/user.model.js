@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
 // const jwt = require('jsonwebtoken');
+
+const roles = {
+  admin: "ADMIN",
+  client: "CLIENT",
+};
 //################ Define or Create Schema ################
 const UserSchema = new mongoose.Schema({
   username: {
@@ -22,6 +27,12 @@ const UserSchema = new mongoose.Schema({
   pass: {
     type: String,
     required: true,
+  },
+
+  role: {
+    type: String,
+    enum: [roles.admin, roles.client],
+    default: roles.client,
   },
 
   // tokens:[{
@@ -55,11 +66,18 @@ UserSchema.methods.isVaildPassword = async function (password) {
 
 // ################ Define Midleware For Hashing Password ################
 UserSchema.pre("save", async function (next) {
-  if (this.isModified("pass")) {
-    // console.log(`Without Hashing : ${this.password}`);
-    this.pass = await bcrypt.hash(this.pass, 12);
-    // console.log(`With Hashing : ${this.password}`);
+  try {
+    if (this.isModified("pass")) {
+      // console.log(`Without Hashing : ${this.password}`);
+      this.pass = await bcrypt.hash(this.pass, 12);
+      // console.log(`With Hashing : ${this.password}`);
+      if (this.email === process.env.ADMIN_EMAIL.toLowerCase()) {
+        this.role = roles.admin;
+      }
+    }
     next();
+  } catch (error) {
+    next(error);
   }
 });
 

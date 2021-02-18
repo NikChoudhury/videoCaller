@@ -65,6 +65,13 @@ app.use("/", require("./routers/index.route"));
 app.use("/auth", require("./routers/auth.route"));
 // User Route
 app.use("/user", ensureAuthenticated, require("./routers/user.route"));
+// Admin Route
+app.use(
+  "/admin",
+  ensureAuthenticated,
+  ensureAdmin,
+  require("./routers/admin.route")
+);
 
 app.get("/room/:room", (req, res) => {
   res.render("room", {
@@ -82,7 +89,7 @@ app.use((error, req, res, next) => {
   res.render("error_40x", {
     error,
   });
-  res.send(error);
+  // res.send(error);
 });
 
 // Database Conn
@@ -113,5 +120,13 @@ function ensureAuthenticated(req, res, next) {
     next();
   } else {
     res.redirect("/auth/signin");
+  }
+}
+function ensureAdmin(req, res, next) {
+  if (req.user.role === "ADMIN") {
+    next();
+  } else {
+    req.flash("warning", "You are not Authorized To See This Route");
+    res.redirect("/");
   }
 }
